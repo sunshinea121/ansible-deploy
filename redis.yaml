@@ -1,0 +1,7 @@
+---
+- hosts: redis
+  remote_user: root
+  vars_files:
+  - ./redis/vars/redis.yaml
+  roles:
+    - role: redis

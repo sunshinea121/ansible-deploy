@@ -1,0 +1,5 @@
+---
+- hosts: redis
+  tasks:
+  - debug:
+      msg: docker run -it goodsmileduck/redis-cli:v5.0.3 redis-cli --cluster-replicas 1 --cluster create {{ groups['redis'] | product(['7000'])| map('join', ':') | join(' ') }} {{ groups['redis'] | product(['7001'])| map('join', ':') | join(' ')}}

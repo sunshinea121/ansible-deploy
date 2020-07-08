@@ -1,0 +1,5 @@
+---
+redis_dir:
+  - conf
+  - data
+  - log

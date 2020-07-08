@@ -1,0 +1,13 @@
+clientPort=2181
+dataDir=/data
+dataLogDir=/data/log
+tickTime=2000
+initLimit=5
+syncLimit=2
+quorumListenOnAllIPs=true
+autopurge.snapRetainCount=3
+autopurge.purgeInterval=0
+maxClientCnxns=60
+server.1={{ hostvars.zookeeper1.ansible_host }}:2888:3888
+server.2={{ hostvars.zookeeper2.ansible_host }}:2888:3888
+server.3={{ hostvars.zookeeper3.ansible_host }}:2888:3888

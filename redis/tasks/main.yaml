@@ -1,0 +1,17 @@
+---
+- name: pull redis mirror
+  shell: docker pull redis:5.0
+- name: mkdir_redis_dir
+  file:
+    path: /app/redis/{{ item }}
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ redis_dir }}"
+- name: copy redis.conf
+  template: src=./redis/templates/redis.conf.j2 dest=/app/redis/conf/redis.conf
+- name: run redis cluster
+  shell: docker run -d -v /app/redis/data:/data -v /app/redis/conf/redis.conf:/etc/redis/redis.conf --net=host --name redis redis:5.0 redis-server /etc/redis/redis.conf
+  notify: create redis cluster

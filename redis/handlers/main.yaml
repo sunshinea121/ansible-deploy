@@ -1,0 +1,5 @@
+---
+- name: create redis cluster
+  shell: docker run -it goodsmileduck/redis-cli:v5.0.3 redis-cli --cluster-replicas 1 --cluster create {{ groups['redis'] | product(['6379'])| map('join', ':') | join(' ') }}
+  #run_once: true
+  when: master is defined
