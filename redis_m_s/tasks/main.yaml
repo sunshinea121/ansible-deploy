@@ -8,7 +8,7 @@
   with_items:
     - "{{ redis_dir }}"
 - name: copy redis.conf
-  template: src=./redis_m_s/templates/redis.conf.j2 dest=/app/redis_m_s/conf/redis.conf
-#- name: run redis
-#  shell: docker run -d -v /app/redis/data:/data -v /app/redis/conf/redis.conf:/etc/redis/redis.conf --net=host --name redis redis:5.0 redis-server /etc/redis/redis.conf
+  template: src=redis.conf.j2 dest=/app/redis_m_s/conf/redis.conf
+- name: run redis
+  shell: docker run -d -v /app/redis_m_s/data:/data -v /app/redis_m_s/conf/redis.conf:/etc/redis/redis.conf --net=host --name redis redis:5.0 redis-server /etc/redis/redis.conf
 #  notify: create_redis_m_s

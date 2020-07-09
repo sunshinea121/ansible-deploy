@@ -11,7 +11,7 @@
   with_items:
     - "{{ redis_dir }}"
 - name: copy redis.conf
-  template: src=./redis/templates/redis.conf.j2 dest=/app/redis/conf/redis.conf
+  template: src=redis.conf.j2 dest=/app/redis/conf/redis.conf
 - name: run redis cluster
   shell: docker run -d -v /app/redis/data:/data -v /app/redis/conf/redis.conf:/etc/redis/redis.conf --net=host --name redis redis:5.0 redis-server /etc/redis/redis.conf
-  notify: create redis cluster
+#  notify: create redis cluster

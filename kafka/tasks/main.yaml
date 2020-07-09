@@ -1,0 +1,14 @@
+---
+- name: pull kafka mirror
+  shell: docker pull registry.cn-beijing.aliyuncs.com/396596712/kafka:2.3.0
+- name: make data dir
+  file:
+    path: /app/kafka/{{ item }}
+    state: directory
+  with_items:
+    - "logs"
+    - "config"
+- name: copy server config
+  template: src=server.properties.j2 dest=/app/kafka/config/server.properties
+- name: run kafka server
+  shell: docker run -d -v /app/kafka/logs:/opt/kafka/logs -v /app/kafka/config/server.properties:/opt/kafka/config/server.properties -p 9092:9092 --name kafka registry.cn-beijing.aliyuncs.com/396596712/kafka:2.3.0

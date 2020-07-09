@@ -1,0 +1,13 @@
+FROM openjdk:8u252-jre
+
+COPY kafka_2.12-2.3.0.tgz /opt/
+
+ENV PATH=${PATH}:/opt/kafka
+
+WORKDIR /opt
+
+RUN tar xf kafka_2.12-2.3.0.tgz \
+&& mv kafka_2.12-2.3.0 kafka \
+&& rm -rf kafka_2.12-2.3.0.tgz 
+
+CMD ["/opt/kafka/bin/kafka-server-start.sh", "/opt/kafka/config/server.properties"]

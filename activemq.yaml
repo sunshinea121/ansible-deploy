@@ -1,18 +1,20 @@
 ---
 - hosts: activemq
   remote_user: root
-  tasks:
-    - name: make activemq data dir
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: '0755'
-      with_items:
-        - /app/activemq/data/
-        - /app/activemq/conf/
-    - name: pull activemq mirror
-      shell: docker pull registry.cn-beijing.aliyuncs.com/396596712/activemq:5.15.9
-    - name: copy activemq config
-      template: src=./activemq.xml.j2 dest=/app/activemq/conf/activemq.xml
-    - name: start activemq
-      shell: docker run --name activemq --network host -d -v /app/activemq/conf/activemq.xml:/opt/activemq/conf/activemq.xml -v /app/activemq/data/:/opt/activemq/data registry.cn-beijing.aliyuncs.com/396596712/activemq:5.15.9
+  roles:
+    - role: activemq
+#  tasks:
+#    - name: make activemq data dir
+#      file:
+#        path: "{{ item }}"
+#        state: directory
+#        mode: '0755'
+#      with_items:
+#        - /app/activemq/data/
+#        - /app/activemq/conf/
+#    - name: pull activemq mirror
+#      shell: docker pull registry.cn-beijing.aliyuncs.com/396596712/activemq:5.15.9
+#    - name: copy activemq config
+#      template: src=./activemq.xml.j2 dest=/app/activemq/conf/activemq.xml
+#    - name: start activemq
+#      shell: docker run --name activemq --network host -d -v /app/activemq/conf/activemq.xml:/opt/activemq/conf/activemq.xml -v /app/activemq/data/:/opt/activemq/data registry.cn-beijing.aliyuncs.com/396596712/activemq:5.15.9

@@ -1,25 +1,27 @@
 ---
 - hosts: zookeeper
   remote_user: root
-  tasks:
-    - name: mkdir zookeeper data dir
-      file:
-        path: "{{ item }}"
-        state: directory
-        mode: '0755'
-      with_items:
-        - /app/zookeeper/data/
-        - /app/zookeeper/conf/
-        - /app/zookeeper/logs/
-    - name: pull zookeeper mirror
-      shell: docker pull zookeeper:3.6.1
-    - name: copy zookeeper config
-      template: src=./zoo.cfg.j2 dest=/app/zookeeper/conf/zoo.cfg
-    - name: create myid file
-      shell: echo {{ myid }} > /app/zookeeper/data/myid
-      notify: restart_zookeeper
-    - meta: flush_handlers
-
-  handlers:
-    - name: restart_zookeeper
-      shell: docker stop zookeeper ; docker rm zookeeper; docker run -v /app/zookeeper/data:/data -v /app/zookeeper/logs:/data/log -v /app/zookeeper/conf:/conf --name zookeeper  -p 2181:2181 -p 2888:2888 -p 3888:3888 -d zookeeper:3.6.1
+  roles:
+    - role: zookeeper
+#  tasks:
+#    - name: mkdir zookeeper data dir
+#      file:
+#        path: "{{ item }}"
+#        state: directory
+#        mode: '0755'
+#      with_items:
+#        - /app/zookeeper/data/
+#        - /app/zookeeper/conf/
+#        - /app/zookeeper/logs/
+#    - name: pull zookeeper mirror
+#      shell: docker pull zookeeper:3.6.1
+#    - name: copy zookeeper config
+#      template: src=./zoo.cfg.j2 dest=/app/zookeeper/conf/zoo.cfg
+#    - name: create myid file
+#      shell: echo {{ myid }} > /app/zookeeper/data/myid
+#      notify: restart_zookeeper
+#    - meta: flush_handlers
+#
+#  handlers:
+#    - name: restart_zookeeper
+#      shell: docker stop zookeeper ; docker rm zookeeper; docker run -v /app/zookeeper/data:/data -v /app/zookeeper/logs:/data/log -v /app/zookeeper/conf:/conf --name zookeeper  -p 2181:2181 -p 2888:2888 -p 3888:3888 -d zookeeper:3.6.1

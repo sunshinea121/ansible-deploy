@@ -1,0 +1,7 @@
+---
+- name: start docker
+  service: name=docker state=started enabled=yes
+- name: daemon file
+  template: src=daemon.json.j2 dest=/etc/docker/daemon.json
+- name: restart docker
+  service: name=docker state=restarted

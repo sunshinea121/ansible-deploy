@@ -1,0 +1,18 @@
+---
+- name: mkdir zookeeper data dir
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - /app/zookeeper/data/
+    - /app/zookeeper/conf/
+    - /app/zookeeper/logs/
+- name: pull zookeeper mirror
+  shell: docker pull zookeeper:3.6.1
+- name: copy zookeeper config
+  template: src=zoo.cfg.j2 dest=/app/zookeeper/conf/zoo.cfg
+- name: create myid file
+  shell: echo {{ myid }} > /app/zookeeper/data/myid
+  notify: restart_zookeeper
+- meta: flush_handlers
