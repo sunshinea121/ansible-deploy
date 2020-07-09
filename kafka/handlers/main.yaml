@@ -1,0 +1,4 @@
+---
+- name: create kafka manager
+  shell: docker run -d -p 9000:9000 -e ZK_HOSTS={{ groups['redis'] | product(['2181'])| map('join', ':') | join(',') }} --name kafka-manager dockerkafka/kafka-manager
+  when: kafka1 is defined
