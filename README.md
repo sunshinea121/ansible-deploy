@@ -1,4 +1,6 @@
 # ansible-deploy
+使用ansible部署相关软件
+activemq三节点集群，redis主从模式，zookeeper三节点集群，kafka三节点集群
 ##### ansible hosts模板
 ```
 [zookeeper]
